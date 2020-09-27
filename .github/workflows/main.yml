@@ -5,14 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: psmodulecache-action-id
+    - name: Set required PowerShell modules
+      id: psmodulecache-action-id
       uses: potatoqualitee/psmodulecache@v0.0.2
       with:
         modules-to-install: 'PSFramework, Pester, dbatools'
-    - run: |
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.paths }}
-      shell: pwsh
-      # time to party
     - name: Setup PowerShell module cache
       id: cache-psmodulesupdate
       uses: actions/cache@v2
