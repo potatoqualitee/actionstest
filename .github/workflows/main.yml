@@ -5,24 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: psmodulecache-action-id
-      uses: potatoqualitee/psmodulecache@v0.0.1
+    - name: Set required PowerShell modules
+      id: psmodulecache-action-id
+      uses: potatoqualitee/psmodulecache@v0.0.2
       with:
-        modules-to-install: 'PSFramework, Pester'
-    - run: |
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.refined-module-list }} 
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.paths }} 
-      shell: pwsh
-
-      # time to party
+        modules-to-install: 'PSFramework, Pester, dbatools'
     - name: Setup PowerShell module cache
       id: cache-psmodulesupdate
       uses: actions/cache@v2
       with:
-          path: ${{ steps.psmodulecache-action-id.outputs.output-paths }}
+          path: ${{ steps.psmodulecache-action-id.outputs.paths }}
           key: ${{ runner.os }}-psmodulesupdate
     - name: Install required PowerShell modules
       if: steps.cache-psmodulesupdate.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-          Install-Modules ${{ steps.psmodulecache-action-id.outputs.installed-modules }} -ErrorAction Stop
+          Install-Module ${{ steps.psmodulecache-action-id.outputs.needed }} -ErrorAction Stop
