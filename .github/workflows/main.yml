@@ -5,11 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - id: example-id
-      uses: potatoqualitee/psmodulecache@v0.0.2
+    - id: psmodulecache-action-id
+      uses: potatoqualitee/psmodulecache@v0.0.1
       with:
         modules-to-install: 'PSFramework, Pester'
-    - run: Write-Output ${{ steps.example-id.outputs.installed-modules }} 
+    - run: |
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.installed-modules }}
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.output-paths }} 
       shell: pwsh
     - run: |
         Import-Module PSFramework
@@ -21,7 +23,7 @@ jobs:
       id: cache-psmodulesupdate
       uses: actions/cache@v2
       with:
-          path: ${{ steps.example-id.outputs.installed-modules }} 
+          path: ${{ steps.psmodulecache-action-id.outputs.installed-modules }} 
           key: ${{ runner.os }}-psmodulesupdate
     - name: Install required PowerShell modules
       if: steps.cache-psmodulesupdate.outputs.cache-hit != 'true'
