@@ -1,9 +1,8 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  sample-job:
     runs-on: ubuntu-latest
-    name: Install and cache PowerShell modules
     steps:
     - uses: actions/checkout@v2
     - id: example-id
@@ -16,3 +15,16 @@ jobs:
         Import-Module PSFramework
         Get-Module PSFramework
       shell: pwsh
+
+      # time to party
+    - name: Setup PowerShell module cache
+      id: cache-psmodulesupdate
+      uses: actions/cache@v2
+      with:
+          path: ${{ steps.example-id.outputs.installed-modules }} 
+          key: ${{ runner.os }}-psmodulesupdate
+    - name: Install required PowerShell modules
+      if: steps.cache-psmodulesupdate.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+          Install-Module PSFramework, Pester -ErrorAction Stop -Force
