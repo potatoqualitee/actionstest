@@ -12,7 +12,7 @@ jobs:
     - run: |
         #paths, new-modules, current-modules
         Write-Output ${{ steps.psmodulecache-action-id.outputs.paths }} 
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.refined-module-list }}
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.paths2 }}
       shell: pwsh
 
       # time to party
