@@ -11,5 +11,5 @@ jobs:
       uses: potatoqualitee/psmodulecache@v0.0.1
       with:
         modules-to-install: 'PSFramework'
-    - run: echo installed-modules-list ${{ steps.foo.outputs.installed-modules-list }} 
+    - run: echo installed-modules-list ${{ steps.foo.outputs.installed-modules }} 
       shell: bash
