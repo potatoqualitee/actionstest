@@ -6,12 +6,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: psmodulecache-action-id
-      uses: potatoqualitee/psmodulecache@v0.0.2
+      uses: potatoqualitee/psmodulecache@v0.0.3
       with:
         modules-to-install: 'PSFramework, Pester'
     - run: |
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.modules-to-install }} 
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.paths }}
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.paths }} 
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.new-modules }}
       shell: pwsh
 
       # time to party
