@@ -10,6 +10,7 @@ jobs:
       with:
         modules-to-install: 'PSFramework, Pester'
     - run: |
+        #paths, new-modules, current-modules
         Write-Output ${{ steps.psmodulecache-action-id.outputs.paths }} 
         Write-Output ${{ steps.psmodulecache-action-id.outputs.new-modules }}
       shell: pwsh
