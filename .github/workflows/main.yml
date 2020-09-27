@@ -8,7 +8,7 @@ jobs:
     - id: psmodulecache-action-id
       uses: potatoqualitee/psmodulecache@v0.0.2
       with:
-        modules-to-install: 'PSFramework, Pester'
+        modules-to-install: 'PSFramework, Pester, dbatools'
     - run: |
         Write-Output ${{ steps.psmodulecache-action-id.outputs.paths }}
       shell: pwsh
