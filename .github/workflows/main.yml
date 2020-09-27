@@ -1,18 +1,28 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  sample-job:
     runs-on: ubuntu-latest
-    name: Install and cache PowerShell modules
     steps:
     - uses: actions/checkout@v2
-    - id: example-id
-      uses: potatoqualitee/psmodulecache@v0.0.2
+    - id: psmodulecache-action-id
+      uses: potatoqualitee/psmodulecache@v0.0.1
       with:
         modules-to-install: 'PSFramework, Pester'
-    - run: Write-Output ${{ steps.example-id.outputs.installed-modules }} 
-      shell: pwsh
     - run: |
-        Import-Module PSFramework
-        Get-Module PSFramework
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.modules }}
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.output-paths }} 
       shell: pwsh
+
+      # time to party
+    - name: Setup PowerShell module cache
+      id: cache-psmodulesupdate
+      uses: actions/cache@v2
+      with:
+          path: ${{ steps.psmodulecache-action-id.outputs.output-paths }}
+          key: ${{ runner.os }}-psmodulesupdate
+    - name: Install required PowerShell modules
+      if: steps.cache-psmodulesupdate.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+          Install-Module ${{ steps.psmodulecache-action-id.outputs.installed-modules }} -ErrorAction Stop -Force
