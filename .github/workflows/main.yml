@@ -12,3 +12,7 @@ jobs:
         modules-to-install: 'PSFramework, Pester'
     - run: Write-Output ${{ steps.example-id.outputs.installed-modules }} 
       shell: pwsh
+    - run: |
+        Import-Module PSFramework
+        Get-Module PSFramework
+      shell: pwsh
