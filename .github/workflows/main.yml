@@ -10,5 +10,5 @@ jobs:
       uses: potatoqualitee/psmodulecache@v0.0.1
       with:
         modules-to-install: 'PSFramework'
-    - run: echo some output ${{ steps.example-id.outputs.list-of-all-installed-modules }} 
-      shell: bash
+    - run: Write-Host ${{ steps.example-id.outputs.list-of-all-installed-modules }} 
+      shell: pwsh
