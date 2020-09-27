@@ -9,6 +9,6 @@ jobs:
     - id: foo
       uses: potatoqualitee/psmodulecache@v0.0.1
       with:
-        modules-to-install: 'PSFramework'
-    - run: echo installed-modules-list ${{ steps.foo.outputs.installed-modules }} 
+        who-to-greet: 'Mona the Octocat'
+    - run: echo list-of-all-installed-modules ${{ steps.foo.outputs.list-of-all-installed-modules }} 
       shell: bash
