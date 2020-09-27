@@ -23,7 +23,7 @@ jobs:
       id: cache-psmodulesupdate
       uses: actions/cache@v2
       with:
-          path: ${{ steps.psmodulecache-action-id.outputs.installed-modules }} 
+          path: ${{ steps.psmodulecache-action-id.outputs.output-paths }}
           key: ${{ runner.os }}-psmodulesupdate
     - name: Install required PowerShell modules
       if: steps.cache-psmodulesupdate.outputs.cache-hit != 'true'
