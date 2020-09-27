@@ -9,6 +9,6 @@ jobs:
     - id: example-id
       uses: potatoqualitee/psmodulecache@v0.0.1
       with:
-        modules-to-install: 'PSFramework'
+        modules-to-install: 'PSFramework, Pester'
     - run: Write-Output ${{ steps.example-id.outputs.list-of-all-installed-modules }} 
       shell: pwsh
