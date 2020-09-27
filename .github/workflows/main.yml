@@ -25,4 +25,4 @@ jobs:
       if: steps.cache-psmodulesupdate.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-          Install-Module ${{ steps.psmodulecache-action-id.outputs.installed-modules }} -ErrorAction Stop -Force
+          Write-Output ${{ steps.psmodulecache-action-id.outputs.installed-modules }} -ErrorAction Stop -Force
