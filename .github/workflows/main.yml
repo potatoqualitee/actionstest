@@ -3,12 +3,12 @@ on: [push]
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    name: A job to install and cache some PowerShell modules
+    name: Install and cache PowerShell modules
     steps:
     - uses: actions/checkout@v2
     - id: example-id
       uses: potatoqualitee/psmodulecache@v0.0.1
       with:
         modules-to-install: 'PSFramework, Pester'
-    - run: ${{ steps.example-id.outputs.installed-modules }} 
+    - run: Write-Output ${{ steps.example-id.outputs.installed-modules }} 
       shell: pwsh
