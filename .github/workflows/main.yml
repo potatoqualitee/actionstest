@@ -26,4 +26,4 @@ jobs:
       if: steps.cache-psmodulesupdate.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-          Install-Modules ${{ steps.psmodulecache-action-id.outputs.modules-to-install }} -ErrorAction Stop
+          #Install-Modules ${{ steps.psmodulecache-action-id.outputs.modules-to-install }} -ErrorAction Stop
