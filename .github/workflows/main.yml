@@ -10,8 +10,8 @@ jobs:
       with:
         modules-to-install: 'PSFramework, Pester'
     - run: |
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.refined-module-list }} 
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.path }}
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.modules-to-install }} 
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.paths }}
       shell: pwsh
 
       # time to party
@@ -19,10 +19,10 @@ jobs:
       id: cache-psmodulesupdate
       uses: actions/cache@v2
       with:
-          path: ${{ steps.psmodulecache-action-id.outputs.output-paths }}
+          path: ${{ steps.psmodulecache-action-id.outputs.paths }}
           key: ${{ runner.os }}-psmodulesupdate
     - name: Install required PowerShell modules
       if: steps.cache-psmodulesupdate.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-          Install-Modules ${{ steps.psmodulecache-action-id.outputs.installed-modules }} -ErrorAction Stop
+          Install-Modules ${{ steps.psmodulecache-action-id.outputs.modules-to-install }} -ErrorAction Stop
