@@ -6,7 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: psmodulecache-action-id
-      uses: potatoqualitee/psmodulecache@v0.0.3
+      uses: potatoqualitee/psmodulecache@v0.0.2
       with:
         modules-to-install: 'PSFramework, Pester'
     - run: |
