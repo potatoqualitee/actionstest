@@ -10,8 +10,9 @@ jobs:
       with:
         modules-to-install: 'PSFramework, Pester'
     - run: |
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.modules }}
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.output-paths }} 
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.list-of-modules }}
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.output-paths }}
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.refined-module-list }} 
       shell: pwsh
 
       # time to party
@@ -25,4 +26,4 @@ jobs:
       if: steps.cache-psmodulesupdate.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-          Install-Module ${{ steps.psmodulecache-action-id.outputs.installed-modules }} -ErrorAction Stop -Force
+          Install-Modules ${{ steps.psmodulecache-action-id.outputs.installed-modules }} -ErrorAction Stop
