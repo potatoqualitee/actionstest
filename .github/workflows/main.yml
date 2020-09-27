@@ -6,7 +6,6 @@ jobs:
     name: A job to say hello
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/cache@v2
     - id: foo
       uses: potatoqualitee/psmodulecache@v0.0.1
       with:
