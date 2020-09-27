@@ -4,6 +4,16 @@ jobs:
   sample-job:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+    - id: psmodulecache-action-id
+      uses: potatoqualitee/psmodulecache@v0.0.2
+      with:
+        modules-to-install: 'PSFramework, Pester'
+    - run: |
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.modules }}
+        Write-Output ${{ steps.psmodulecache-action-id.outputs.output-paths }} 
+      shell: pwsh
+
       # time to party
     - name: Setup PowerShell module cache
       id: cache-psmodulesupdate
@@ -15,13 +25,4 @@ jobs:
       if: steps.cache-psmodulesupdate.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
-          Write-Output ${{ steps.psmodulecache-action-id.outputs.installed-modules }} -ErrorAction Stop -Force
-    - uses: actions/checkout@v2
-    - id: psmodulecache-action-id
-      uses: potatoqualitee/psmodulecache@v0.0.1
-      with:
-        modules-to-install: 'PSFramework, Pester'
-    - run: |
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.modules }}
-        Write-Output ${{ steps.psmodulecache-action-id.outputs.output-paths }} 
-      shell: pwsh
+          Install-Modules ${{ steps.psmodulecache-action-id.outputs.installed-modules }} -ErrorAction Stop
