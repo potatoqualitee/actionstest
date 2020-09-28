@@ -16,6 +16,7 @@ jobs:
       with:
           path: |
             /home/runner/.local/share/powershell/Modules/
+          # change key to invalidate the cache
           key: ${{ runner.os }}-allmodules
     - name: Install required PowerShell modules
       if: steps.psmodulecache-cacher.outputs.cache-hit != 'true'
@@ -26,4 +27,4 @@ jobs:
     - name: Show that the Action works
       shell: pwsh
       run: |
-          Import-Module PSFramework, Pester, SPrelicator
+          Import-Module PSFramework, Pester, SPreplicator
