@@ -10,6 +10,18 @@ jobs:
       uses: potatoqualitee/psmodulecache@v4
       with:
         modules-to-cache: 'PSFramework, Pester, dbatools'
+
+
+        
+    - name: Test stuff
+      shell: pwsh
+      run: |
+          Get-Module -Name ${{ steps.psmodulecache-action-id.outputs.modules-to-cache }} -ListAvailable | Select Name
+          Write-Output "$($runner)"
+          Get-ChildItem $env:
+          Get-Module -Name ${{ steps.psmodulecache-action-id.inputs.modules-to-cache }} -ListAvailable | Select Name
+
+
     - name: Setup PowerShell module cache
       id: psmodulecache-cacher
       uses: actions/cache@v2
