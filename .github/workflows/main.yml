@@ -25,4 +25,4 @@ jobs:
     - name: Show that the Action works
       shell: pwsh
       run: |
-          Get-Module PSFramework, Pester, dbatools -ListAvailable
+          Get-Module PSFramework, Pester, SPrelicator -ListAvailable
