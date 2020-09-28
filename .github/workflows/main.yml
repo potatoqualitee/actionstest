@@ -9,15 +9,13 @@ jobs:
       id: psmodulecache-action-id
       uses: potatoqualitee/psmodulecache@v4
       with:
-        modules-to-cache: 'PSFramework, Pester, SPReplicator'
+        modules-to-cache: 'PSFramework, Pester, dbatools'
     - name: Setup PowerShell module cache
       id: psmodulecache-cacher
       uses: actions/cache@v2
       with:
-          path: |
-            /home/runner/.local/share/powershell/Modules/
-          # change key to invalidate the cache
-          key: ${{ runner.os }}-allmodules
+          path: /home/runner/.local/share/powershell/Modules/
+          key: ${{ runner.os }}-${{ steps.psmodulecache-action-id.inputs.modules-to-cache }}
     - name: Install required PowerShell modules
       if: steps.psmodulecache-cacher.outputs.cache-hit != 'true'
       shell: pwsh
