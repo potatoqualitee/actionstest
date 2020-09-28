@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   sample-job:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
     - name: Set required PowerShell modules
@@ -25,4 +25,4 @@ jobs:
     - name: Show that the Action works
       shell: pwsh
       run: |
-          Get-Module -Name ${{ steps.psmodulecache-action-id.outputs.modules-to-cache }} -ListAvailable | Select Name
+          Get-Module -Name ${{ steps.psmodulecache-action-id.outputs.modules-to-cache }} -ListAvailable | Select Path
