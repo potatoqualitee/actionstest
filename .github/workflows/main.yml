@@ -25,7 +25,7 @@ jobs:
       uses: actions/cache@v2
       with:
           path: "/home/runner/.local/share/powershell/Modules/"
-          key: "temp"
+          key: ${{ runner.os }}-${{ steps.psmodulecache-action-id.outputs.keygen }}
     - name: Install required PowerShell modules
       if: steps.psmodulecache-cacher.outputs.cache-hit != 'true'
       shell: pwsh
