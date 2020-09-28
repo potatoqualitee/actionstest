@@ -27,4 +27,4 @@ jobs:
     - name: Show that the Action works
       shell: pwsh
       run: |
-          Import-Module PSFramework, Pester, SPreplicator
+          Get-Module -Name PSFramework, Pester, SPreplicator -ListAvailable
