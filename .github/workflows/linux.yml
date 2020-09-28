@@ -21,7 +21,17 @@ jobs:
       shell: pwsh
       run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module ${{ steps.psmodulecache.outputs.needed }} -ErrorAction Stop
+          $modulelist = "${{ steps.psmodulecache.outputs.original-list }}"
+          if ($modulelist -notmatch "\:") {
+            Install-Module ${{ steps.psmodulecache.outputs.needed }} -ErrorAction Stop
+          } else {
+            # it's versioned
+            $modules = $modulelist.Split(",").Trim()
+            foreach ($module in $modules) {
+                $item, $version = $module.Split(":")
+                Install-Module $item -RequiredVersion $version -ErrorAction Stop
+            }
+          }
     - name: Show that the Action works
       shell: pwsh
       run: |
