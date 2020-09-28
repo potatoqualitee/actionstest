@@ -18,7 +18,7 @@ jobs:
       run: |
           Get-Module -Name ${{ steps.psmodulecache-action-id.outputs.modules-to-cache }} -ListAvailable | Select Name
           Write-Output "$($runner)"
-          Get-ChildItem $env:
+          Get-ChildItem ${ $env: }
           Get-Module -Name ${{ steps.psmodulecache-action-id.inputs.modules-to-cache }} -ListAvailable | Select Name
 
 
