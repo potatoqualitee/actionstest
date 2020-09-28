@@ -9,7 +9,7 @@ jobs:
       id: psmodulecache
       uses: potatoqualitee/psmodulecache@v1
       with:
-        modules-to-cache: 'PSFramework, Pester, dbatools'
+        modules-to-cache: 'Pester, dbatools'
     - name: Setup PowerShell module cache
       id: cacher
       uses: actions/cache@v2
