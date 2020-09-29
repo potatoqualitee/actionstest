@@ -14,7 +14,7 @@ jobs:
       id: psmodulecache
       uses: potatoqualitee/psmodulecache@v1.1
       with:
-        modules-to-cache: PSFramework:1.0.2, Pester, dbatools:1.0.0, ImportExcel
+        modules-to-cache: PSFramework, Pester, dbatools, ImportExcel
     - name: Setup PowerShell module cache
       id: cacher
       uses: actions/cache@v2
