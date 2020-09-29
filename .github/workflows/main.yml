@@ -1,15 +1,20 @@
 on: [push]
 
 jobs:
-  run-on-windows:
-    runs-on: windows-latest
+  build:
+    name: Action works on all platforms
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
     - uses: actions/checkout@v2
     - name: Set required PowerShell modules
       id: psmodulecache
       uses: potatoqualitee/psmodulecache@v1.1
       with:
-        modules-to-cache: PSFramework, Pester, dbatools
+        modules-to-cache: PSFramework:1.0.2, Pester, dbatools:1.0.0, ImportExcel
     - name: Setup PowerShell module cache
       id: cacher
       uses: actions/cache@v2
@@ -21,7 +26,17 @@ jobs:
       shell: pwsh
       run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module ${{ steps.psmodulecache.outputs.needed }} -ErrorAction Stop
+          $modulelist = "${{ steps.psmodulecache.outputs.original-list }}"
+          if ($modulelist -notmatch "\:") {
+            Install-Module ${{ steps.psmodulecache.outputs.needed }} -ErrorAction Stop
+          } else {
+            # it's versioned
+            $modules = $modulelist.Split(",").Trim()
+            foreach ($module in $modules) {
+                $item, $version = $module.Split(":")
+                Install-Module $item -RequiredVersion $version -ErrorAction Stop
+            }
+          }
     - name: Show that the Action works
       shell: pwsh
       run: |
