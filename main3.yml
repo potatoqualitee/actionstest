@@ -4,9 +4,9 @@ on: [push]
 
 jobs:
   docs:
-    name: Pester tests work on all platforms
+    name: Cacher works
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v2
     - name: Setup PowerShell module cache
