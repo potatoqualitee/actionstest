@@ -1,0 +1,28 @@
+name: Upload artifact from on Ubuntu, macOS and Windows
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+    name: Upload Pester tests work from all platforms
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Test with Pester
+      shell: pwsh
+      run: Invoke-Pester All.Tests.ps1 -Passthru | Export-CliXml -Path All.Tests.xml
+    - name: Upload test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: All-Tests
+        path: All.Tests.xml
+        # Use always() to always run this step to publish test results when there are test failures
+    if: ${{ always() }}
