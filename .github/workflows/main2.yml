@@ -1,0 +1,19 @@
+name: Test PowerShell on Ubuntu, macOS and Windows
+
+on: [push]
+
+jobs:
+  docs:
+    name: Pester tests work on all platforms
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module SqlServer, PSScriptAnalyzer
+        shell: pwsh
