@@ -1,0 +1,23 @@
+name: Test Caching on Ubuntu
+
+on: [push]
+
+jobs:
+  docs:
+    name: Pester tests work on all platforms
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup PowerShell module cache
+      id: cacher
+      uses: actions/cache@v2
+      with:
+        path: "~/.local/share/powershell/Modules"
+        key: ${{ runner.os }}-SqlServer-PSScriptAnalyzer
+    - name: Install required PowerShell modules
+      if: steps.cacher.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        Set-PSRepository PSGallery -InstallationPolicy Trusted
+        Install-Module SqlServer, PSScriptAnalyzer -ErrorAction Stop
