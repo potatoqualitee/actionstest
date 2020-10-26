@@ -12,3 +12,4 @@ jobs:
         skipautomatictags: true
         whatif: true
         modulepath: ./dataops
+        gallerykey: ${{ secrets.GALLERYKEY }}
