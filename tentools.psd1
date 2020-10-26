@@ -33,7 +33,6 @@
     PowerShellVersion  = '3.0'
 
     # Modules that must be imported into the global environment prior to importing this module
-    RequiredModules    = @('PSFramework', 'PoshRSJob')
 
     # Format files (.ps1xml) to be loaded when importing this module
     FormatsToProcess   = @()
