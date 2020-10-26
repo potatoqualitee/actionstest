@@ -28,7 +28,7 @@
     PowerShellVersion = '5.1'
 
     # Modules that must be imported into the global environment prior to importing this module
-    RequiredModules   = @('dbatools', 'dbachecks', 'dbops', 'PSDatabaseClone')
+    RequiredModules   = @()
 
     PrivateData       = @{
         # PSData is module packaging and gallery metadata embedded in PrivateData
