@@ -35,9 +35,6 @@
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules    = @('PSFramework', 'PoshRSJob')
 
-    # Assemblies that must be loaded prior to importing this module
-    RequiredAssemblies = @('bin\RestSharp.dll')
-
     # Format files (.ps1xml) to be loaded when importing this module
     FormatsToProcess   = @()
 
