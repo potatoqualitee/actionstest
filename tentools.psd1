@@ -12,7 +12,7 @@
     RootModule         = 'tentools.psm1'
 
     # Version number of this module.
-    ModuleVersion      = '0.0.2'
+    ModuleVersion      = '0.0.3'
 
     # ID used to uniquely identify this module
     GUID               = '1e19a8e4-ef98-4f0a-bd7d-f6613c3b7375'
