@@ -10,4 +10,3 @@ jobs:
       uses: potatoqualitee/pspublish@test
       with:
         skipautomatictags: true
-        files: ""
