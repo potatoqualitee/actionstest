@@ -9,7 +9,7 @@ jobs:
       id: pspublish
       uses: potatoqualitee/pspublish@test
       with:
-        skipautomatictags: $true
+        skipautomatictags: 1
         whatif: $true
         modulepath: ./dataops
         gallerykey: ${{ secrets.GALLERYKEY }}
