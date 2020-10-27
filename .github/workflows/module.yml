@@ -1,4 +1,8 @@
-on: [push]
+name: Publish
+on:
+  push:
+    branches:
+      - test
 
 jobs:
   run-on-linux:
