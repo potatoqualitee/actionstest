@@ -1,0 +1,13 @@
+name: Actions Workflow
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Write nessus license from secrets to disk
+        run: 'echo "$TEST"'
+        shell: bash
+        env:
+          TEST: ${{secrets.TEST}}
