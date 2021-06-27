@@ -15,6 +15,7 @@ jobs:
       TACCESSTOKENSECRET: ${{secrets.TWITTERACCESSTOKENSECRET}}
 
     steps:
+      - uses: actions/checkout@v2
       - name: 💲 Create variables for module cacher
         id: psmodulecache
         uses: potatoqualitee/psmodulecache@v3
