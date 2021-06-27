@@ -13,24 +13,3 @@ jobs:
       TAPIKEYSECRET: ${{secrets.TWITTERAPIKEYSECRET}}
       TACCESSTOKEN: ${{secrets.TWITTERACCESSTOKEN}}
       TACCESSTOKENSECRET: ${{secrets.TWITTERACCESSTOKENSECRET}}
-
-    steps:
-      - name: 💲 Create variables for module cacher
-        uses: potatoqualitee/psmodulecache@v3
-        with:
-          modules-to-cache: BlueBirdPS
-
-      - name: 🧰 Run module cacher action
-        id: cacher
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.psmodulecache.outputs.modulepath }}
-          key: ${{ steps.psmodulecache.outputs.keygen }}
-
-      - name: 🤩 Install PowerShell modules
-        if: steps.cacher.outputs.cache-hit != 'true'
-        uses: potatoqualitee/psmodulecache@v3
-
-      - name: 🚀 Do it
-        run: |
-          ./twitter/twitter.ps1
