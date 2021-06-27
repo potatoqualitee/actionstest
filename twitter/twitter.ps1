@@ -154,7 +154,7 @@ foreach ($mention in $mentions) {
         }
         
         # if anyone else on the thread is blocked
-        foreach ($entity in $mention.Entities) {
+        foreach ($entity in $mention.Entities.UserName) {
             $id = (Get-TwitterUser -UserName $entity).Id
             if ($id -in $blocked.Id) {
                 Write-Warning "BLOCKING $(author.UserName) FOR RELATED BLOCKS ($id)"
