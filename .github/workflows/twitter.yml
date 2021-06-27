@@ -9,10 +9,10 @@ jobs:
   blockcheck:
     runs-on: ubuntu-latest
     env:
-      APIKEY: ${{secrets.TWITTERAPIKEY}}
-      APIKEYSECRET: ${{secrets.TWITTERAPIKEYSECRET}}
-      ACCESSTOKEN: ${{secrets.TWITTERACCESSTOKEN}}
-      ACCESSTOKENSECRET: ${{secrets.TWITTERACCESSTOKENSECRET}}
+      TAPIKEY: ${{secrets.TWITTERAPIKEY}}
+      TAPIKEYSECRET: ${{secrets.TWITTERAPIKEYSECRET}}
+      TACCESSTOKEN: ${{secrets.TWITTERACCESSTOKEN}}
+      TACCESSTOKENSECRET: ${{secrets.TWITTERACCESSTOKENSECRET}}
 
     steps:
       - name: 💲 Create variables for module cacher

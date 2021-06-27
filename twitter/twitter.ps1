@@ -1,8 +1,8 @@
 $params = @{
-    ApiKey            = $env:APIKEY
-    ApiSecret         = $env:APIKEYSECRET
-    AccessToken       = $env:ACCESSTOKEN
-    AccessTokenSecret = $env:ACCESSTOKENSECRET
+    ApiKey            = $env:TAPIKEY
+    ApiSecret         = $env:TAPIKEYSECRET
+    AccessToken       = $env:TACCESSTOKEN
+    AccessTokenSecret = $env:TACCESSTOKENSECRET
 }
 Set-TwitterAuthentication @params
 function Get-TwitterMention ($Id) {
