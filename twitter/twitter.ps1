@@ -149,7 +149,7 @@ foreach ($mention in $mentions) {
         if ($mention.Text -match ($bannedwords -join "|") -and $mention.Text -notmatch ($allowedwords -join "|")) {
             #no API for muting conversation
             #Set-TwitterBlockedUser -User $author.UserName -Block
-            Write-Warning "BLOCKING $(author.UserName) FOR WORDS MATCHED"
+            Write-Warning "BLOCKING $($author.UserName) FOR WORDS MATCHED"
             continue
         }
         
