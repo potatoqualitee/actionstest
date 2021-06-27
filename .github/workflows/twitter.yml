@@ -9,10 +9,10 @@ jobs:
   blockcheck:
     runs-on: ubuntu-latest
     env:
-      TAPIKEY: ${{secrets.TWITTERAPIKEY}}
-      TAPIKEYSECRET: ${{secrets.TWITTERAPIKEYSECRET}}
-      TACCESSTOKEN: ${{secrets.TWITTERACCESSTOKEN}}
-      TACCESSTOKENSECRET: ${{secrets.TWITTERACCESSTOKENSECRET}}
+      BLUEBIRDPS_API_KEY: ${{secrets.TWITTERAPIKEY}}
+      BLUEBIRDPS_API_SECRET: ${{secrets.TWITTERAPIKEYSECRET}}
+      BLUEBIRDPS_ACCESS_TOKEN: ${{secrets.TWITTERACCESSTOKEN}}
+      BLUEBIRDPS_ACCESS_TOKEN_SECRET: ${{secrets.TWITTERACCESSTOKENSECRET}}
 
     steps:
       - uses: actions/checkout@v2

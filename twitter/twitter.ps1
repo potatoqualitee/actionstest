@@ -4,7 +4,7 @@ $params = @{
     AccessToken       = $env:TACCESSTOKEN
     AccessTokenSecret = $env:TACCESSTOKENSECRET
 }
-Set-TwitterAuthentication @params
+#Set-TwitterAuthentication @params
 function Get-TwitterMention ($Id) {
     $params = @{
         ExpansionType = 'Tweet'
