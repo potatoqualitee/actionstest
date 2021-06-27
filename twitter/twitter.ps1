@@ -132,7 +132,7 @@ $allowedwords = @(
 
 $Id = 2993481
 $mentions = Get-TwitterMention -Id $Id
-
+$entities = $mentions.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object -Unique
 foreach ($mention in $mentions) {
     # Check if it's a directed tweet
     if ($mention.Entities.Count -eq 1 -and -not $mention.ReferencedTweets) {
@@ -154,7 +154,7 @@ foreach ($mention in $mentions) {
         }
         
         # if anyone else on the thread is blocked
-        foreach ($entity in $mention.Entities.UserName) {
+        foreach ($entity in $entities) {
             try {
                 $id = (Get-TwitterUser -UserName $entity).Id
             } catch {}
