@@ -136,10 +136,9 @@ $allowedwords = @(
     'podcast'
 )
 
-$processed = @()
 $myid = 2993481
 $mentions = Get-TwitterMention -Id $myid-Unique
-
+$processed = @()
 foreach ($mention in $mentions) {
     $entities = $mention.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object 
     $mentionusername = (Get-TwitterUser -Id $mention.AuthorId).UserName
@@ -192,46 +191,44 @@ foreach ($mention in $mentions) {
             continue
         }
 
-        if ($entities.UserName.Count -gt 0) {
-            # if anyone else on the thread is blocked
-            foreach ($entity in $entities) {
-                $related = $entity.Replace("@","")
-                if ($related -eq $author.Username) {
-                    Write-Output "Not a real entity"
-                    continue
-                }
+        # if anyone else on the thread is blocked
+        foreach ($entity in $entities) {
+            $related = $entity.Replace("@","")
+            if ($related -eq $author.Username) {
+                Write-Output "Not a real entity"
+                continue
+            }
 
-                if ($related -in $processed) {
-                    Write-Output "$related has already been processed"
-                    continue
-                } else {
-                    $processed += $related
-                }
+            if ($related -in $processed) {
+                Write-Output "$related has already been processed"
+                continue
+            } else {
+                $processed += $related
+            }
 
-                #Write-Output "Checking $related for friendship"
+            #Write-Output "Checking $related for friendship"
+            try {
+                $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $related
+            } catch {
+                Write-Output "$related no longer exists"
+                continue
+            }
+            if ($anyfollows.Source -match 'Following' -or $anyfollows.Target -match 'Following') {
+                Write-Output "Skipping $related cuz y'all friends"
+                continue
+            }
+
+            if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
                 try {
-                    $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $related
+                    $twuser = Get-TwitterUser -UserName $entity
                 } catch {
-                    Write-Output "$related no longer exists"
+                    Write-Output "$entity no longer exists"
                     continue
                 }
-                if ($anyfollows.Source -match 'Following' -or $anyfollows.Target -match 'Following') {
-                    Write-Output "Skipping $related cuz y'all friends"
+                if ($twuser.id -in $blocked.Id) {
+                    Write-Output "BLOCKING $($author.UserName) FOR RELATED BLOCKS $($twuser.UserName)"
+                    $author | Set-TwitterBlockedUser -Block
                     continue
-                }
-
-                if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
-                    try {
-                        $twuser = Get-TwitterUser -UserName $entity
-                    } catch {
-                        Write-Output "$entity no longer exists"
-                        continue
-                    }
-                    if ($twuser.id -in $blocked.Id) {
-                        Write-Output "BLOCKING $($author.UserName) FOR RELATED BLOCKS $($twuser.UserName)"
-                        $author | Set-TwitterBlockedUser -Block
-                        continue
-                    }
                 }
             }
         }
