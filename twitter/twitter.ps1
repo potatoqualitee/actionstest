@@ -182,7 +182,7 @@ foreach ($mention in $mentions) {
     
             if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
                 try {
-                    $twuser = (Get-TwitterUser -UserName $entity).Id
+                    $twuser = Get-TwitterUser -UserName $entity
                 } catch {}
                 if ($twuser.id -in $blocked.Id) {
                     Write-Warning "BLOCKING $($entity.Replace('@','')) FOR RELATED BLOCKS ($id)"
