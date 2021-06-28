@@ -222,7 +222,7 @@ foreach ($mention in $mentions) {
                     continue
                 }
             }
-            Write-Output "$($author.userName) made it past filters"
         }
     }
+    Write-Output "$($author.userName) made it past filters"
 }
