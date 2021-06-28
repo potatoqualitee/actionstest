@@ -175,6 +175,7 @@ foreach ($mention in $mentions) {
         }
         # if anyone else on the thread is blocked
         foreach ($entity in $entities) {
+            write-warning $entity.Replace("@","")
             $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $entity.Replace("@","")
     
             if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
