@@ -152,6 +152,10 @@ foreach ($mention in $mentions) {
     $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $author.UserName 
     $blocked = Get-TwitterBlockedUserList -Id $myid
 
+    if ($anyfollows.Source -match "Blocking") {
+        Write-Output "Skipping tweet from $($author.UserName) because they are already blocked"
+        continue
+    }
     if ($anyfollows.Source -notmatch 'none' -or $anyfollows.Target -notmatch 'none') {
         Write-Output "Skpping $($author.UserName) cuz y'all friends"
         continue
