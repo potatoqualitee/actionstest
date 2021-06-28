@@ -191,12 +191,12 @@ foreach ($mention in $mentions) {
                 Write-Output "$related no longer exists"
                 continue
             }
-    
+            $anyfollows
             if ($anyfollows.Source -notmatch 'none' -or $anyfollows.Target -notmatch 'none') {
                 Write-Output "Skpping $($author.UserName) cuz y'all friends"
                 continue
             }
-            
+
             if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
                 try {
                     $twuser = Get-TwitterUser -UserName $entity
