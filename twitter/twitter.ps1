@@ -156,7 +156,7 @@ foreach ($mention in $mentions) {
         Write-Output "Skipping tweet from $($author.UserName) because they are already blocked"
         continue
     }
-    if ($anyfollows.Source -notmatch 'none' -or $anyfollows.Target -notmatch 'none') {
+    if ($anyfollows.Source -match 'Following' -or $anyfollows.Target -match 'Following') {
         Write-Output "Skpping $($author.UserName) cuz y'all friends"
         continue
     }
@@ -195,8 +195,7 @@ foreach ($mention in $mentions) {
                 Write-Output "$related no longer exists"
                 continue
             }
-            $anyfollows
-            if ($anyfollows.Source -notmatch 'none' -or $anyfollows.Target -notmatch 'none') {
+            if ($anyfollows.Source -match 'Following' -or $anyfollows.Target -match 'Following') {
                 Write-Output "Skpping $($author.UserName) cuz y'all friends"
                 continue
             }
