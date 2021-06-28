@@ -135,7 +135,7 @@ $mentions = Get-TwitterMention -Id $Id
 $entities = $mentions.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object -Unique
 foreach ($mention in $mentions) {
     # Check if it's a directed tweet
-    if ($mention.Entities.Count -eq 1 -and -not $mention.ReferencedTweets) {
+    if ($mention.Entities.Split(":").Count -eq 1 -and -not $mention.ReferencedTweets) {
         Write-Output "Skipping tweet from $(Get-TwitterUser -Id $mention.AuthorId)"
         continue
     }
