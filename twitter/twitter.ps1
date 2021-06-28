@@ -137,10 +137,10 @@ $allowedwords = @(
 )
 
 $myid = 2993481
-$mentions = Get-TwitterMention -Id $myid
-$entities = $mentions.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object -Unique
+$mentions = Get-TwitterMention -Id $myid-Unique
 $processed = @()
 foreach ($mention in $mentions) {
+    $entities = $mention.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object 
     $mentionusername = (Get-TwitterUser -Id $mention.AuthorId).UserName
     if ($mentionusername -in $processed) {
         Write-Output "$mentionusername has already been processed"
