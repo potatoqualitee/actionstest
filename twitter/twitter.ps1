@@ -133,10 +133,17 @@ $allowedwords = @(
 $Id = 2993481
 $mentions = Get-TwitterMention -Id $Id
 $entities = $mentions.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object -Unique
+$processed = @()
 foreach ($mention in $mentions) {
+    $mentionusername = (Get-TwitterUser -Id $mention.AuthorId).UserName
+    if ($mentionusername -in $processed) {
+        continue
+    } else {
+        $processed += $mentionusername
+    }
     # Check if it's a directed tweet
     if ($mention.Entities.Count -eq 1 -and -not $mention.ReferencedTweets) {
-        Write-Output "Skipping tweet from $((Get-TwitterUser -Id $mention.AuthorId).UserName)"
+        Write-Output "Skipping tweet from $($mentionusername)"
         continue
     }
 
