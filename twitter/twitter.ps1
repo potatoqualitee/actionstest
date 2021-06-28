@@ -185,8 +185,8 @@ foreach ($mention in $mentions) {
                     $id = (Get-TwitterUser -UserName $entity).Id
                 } catch {}
                 if ($id -in $blocked.Id) {
-                    Write-Warning "BLOCKING $(author.UserName) FOR RELATED BLOCKS ($id)"
-                    Set-TwitterBlockedUser -User $entity -Block
+                    Write-Warning "BLOCKING $($entity.Replace('@','')) FOR RELATED BLOCKS ($id)"
+                    #Set-TwitterBlockedUser -User $entity.Replace("@","") -Block
                     continue
                 }
             }
