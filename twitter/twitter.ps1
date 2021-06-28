@@ -161,7 +161,7 @@ foreach ($mention in $mentions) {
         continue
     }
     if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
-        Write-Output "No follow for $($author.UserName)"
+        Write-Output "No follow for $($author.UserName), processing"
         # Not following, not followed
         if ($mention.Text -match ($bannedwords -join "|") -and $mention.Text -notmatch ($allowedwords -join "|")) {
             #no API for muting conversation
@@ -209,10 +209,11 @@ foreach ($mention in $mentions) {
                 }
                 if ($twuser.id -in $blocked.Id) {
                     Write-Output "BLOCKING $($author.UserName) FOR RELATED BLOCKS $($twuser.UserName)"
-                    #$author | Set-TwitterBlockedUser -Block
+                    $author | Set-TwitterBlockedUser -Block
                     continue
                 }
             }
+            Write-Output "$($author.userName) made it past filters"
         }
     }
 }
