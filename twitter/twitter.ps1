@@ -138,6 +138,7 @@ $processed = @()
 foreach ($mention in $mentions) {
     $mentionusername = (Get-TwitterUser -Id $mention.AuthorId).UserName
     if ($mentionusername -in $processed) {
+        Write-Output "$mentionusername has already been processed"
         continue
     } else {
         $processed += $mentionusername
@@ -188,6 +189,14 @@ foreach ($mention in $mentions) {
         # if anyone else on the thread is blocked
         foreach ($entity in $entities) {
             $related = $entity.Replace("@","")
+
+            if ($related -in $processed) {
+                Write-Output "$related has already been processed"
+                continue
+            } else {
+                $processed += $related
+            }
+
             #Write-Output "Checking $related for friendship"
             try {
                 $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $related
