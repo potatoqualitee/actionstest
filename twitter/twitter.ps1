@@ -117,7 +117,11 @@ $bannedwords = @(
     'hooper',
     'heat',
     'd1e',
-    'm@g@'
+    'm@g@',
+    'Westbrook',
+    'Luka',
+    '76',
+    'Pistons'
 )
 # ONCE DONE, LOOK TO PROFILE FOR BANNED WORDS
 $allowedwords = @(
@@ -128,7 +132,8 @@ $allowedwords = @(
     'book',
     'presentation',
     'Microsoft',
-    'GitHub'
+    'GitHub',
+    'podcast'
 )
 
 $myid = 2993481
@@ -189,6 +194,10 @@ foreach ($mention in $mentions) {
         # if anyone else on the thread is blocked
         foreach ($entity in $entities) {
             $related = $entity.Replace("@","")
+            if ($related -eq $author.Username) {
+                Write-Output "Not a real entity"
+                continue
+            }
 
             if ($related -in $processed) {
                 Write-Output "$related has already been processed"
