@@ -10,7 +10,7 @@ function Get-TwitterMention ($Id) {
         ExpansionType = 'Tweet'
         Endpoint      = "https://api.twitter.com/2/users/$Id/mentions"
         Query         = @{
-            'max_results' = 50
+            'max_results' = 20
         }
     }
     Invoke-TwitterRequest -RequestParameters $params
@@ -150,6 +150,7 @@ foreach ($mention in $mentions) {
             #no API for muting conversation
             #Set-TwitterBlockedUser -User $author.UserName -Block
             Write-Warning "BLOCKING $($author.UserName) FOR TWEET WORDS MATCHED"
+            Write-Warning $mention.Text
             continue
         }
         
@@ -173,6 +174,7 @@ foreach ($mention in $mentions) {
             #no API for muting conversation
             #Set-TwitterBlockedUser -User $author.UserName -Block
             Write-Warning "BLOCKING $($author.UserName) FOR PROFILE WORDS MATCHED"
+            Write-Warning $twprofile.Description
             continue
         }
     }
