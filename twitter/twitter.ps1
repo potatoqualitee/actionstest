@@ -144,49 +144,62 @@ foreach ($mention in $mentions) {
     }
     # Check if it's a directed tweet
     if ($mention.Entities.Count -eq 1 -and -not $mention.ReferencedTweets) {
-        Write-Output "Skipping tweet from $($mentionusername)"
+        Write-Output "Skipping tweet from $($mentionusername) -- seems like a directed tweet"
         continue
     }
 
     $author = Get-TwitterUser -Id $mention.AuthorId
     $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $author.UserName 
     $blocked = Get-TwitterBlockedUserList -Id $myid
-    
+
+    if ($anyfollows.Source -notmatch 'none' -or $anyfollows.Target -notmatch 'none') {
+        Write-Output "Skpping $($author.UserName) cuz y'all friends"
+        continue
+    }
     if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
         Write-Output "No follow for $($author.UserName)"
         # Not following, not followed
         if ($mention.Text -match ($bannedwords -join "|") -and $mention.Text -notmatch ($allowedwords -join "|")) {
             #no API for muting conversation
             $author | Set-TwitterBlockedUser -Block
-            Write-Warning "BLOCKING $($author.UserName) FOR TWEET WORDS MATCHED"
-            Write-Warning $mention.Text
+            Write-Output "BLOCKING $($author.UserName) FOR TWEET WORDS MATCHED"
+            Write-Output $mention.Text
             continue
         }
         
         try {
             $twprofile = Get-TwitterUser -UserName $author.UserName
-        } catch {}
+        } catch {
+            Write-Output "$($author.UserName) no longer exists"
+        }
         
         if ($twprofile.Description -match ($bannedwords -join "|")) {
             #no API for muting conversation
             $author | Set-TwitterBlockedUser -Block
-            Write-Warning "BLOCKING $($author.UserName) FOR PROFILE WORDS MATCHED"
-            Write-Warning $twprofile.Description
+            Write-Output "BLOCKING $($author.UserName) FOR PROFILE WORDS MATCHED"
+            Write-Output $twprofile.Description
             continue
         }
         # if anyone else on the thread is blocked
         foreach ($entity in $entities) {
-            Write-Warning "$($entity.Replace('@',''))"
+            $related = $entity.Replace("@","")
+            Write-Output "Checking $related for friendship"
             try {
-                $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $entity.Replace("@","")
-            } catch {}
+                $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $related
+            } catch {
+                Write-Output "$related no longer exists"
+                continue
+            }
     
             if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
                 try {
                     $twuser = Get-TwitterUser -UserName $entity
-                } catch {}
+                } catch {
+                    Write-Output "$entity no longer exists"
+                    continue
+                }
                 if ($twuser.id -in $blocked.Id) {
-                    Write-Warning "BLOCKING $($author.UserName) FOR RELATED BLOCKS $($twuser.UserName)"
+                    Write-Output "BLOCKING $($author.UserName) FOR RELATED BLOCKS $($twuser.UserName)"
                     #$author | Set-TwitterBlockedUser -Block
                     continue
                 }
