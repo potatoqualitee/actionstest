@@ -137,7 +137,7 @@ $allowedwords = @(
 )
 
 $myid = 2993481
-$mentions = Get-TwitterMention -Id $myid-Unique
+$mentions = Get-TwitterMention -Id $myid
 $processed = @()
 foreach ($mention in $mentions) {
     $entities = $mention.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object 
