@@ -157,7 +157,8 @@ foreach ($mention in $mentions) {
         continue
     }
     if ($anyfollows.Source -match 'Following' -or $anyfollows.Target -match 'Following') {
-        Write-Output "Skpping $($author.UserName) cuz y'all friends"
+        Write-Output "Skipping $($author.UserName) cuz y'all friends"
+        $anyfollows
         continue
     }
     if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
@@ -188,7 +189,7 @@ foreach ($mention in $mentions) {
         # if anyone else on the thread is blocked
         foreach ($entity in $entities) {
             $related = $entity.Replace("@","")
-            Write-Output "Checking $related for friendship"
+            #Write-Output "Checking $related for friendship"
             try {
                 $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $related
             } catch {
@@ -196,7 +197,8 @@ foreach ($mention in $mentions) {
                 continue
             }
             if ($anyfollows.Source -match 'Following' -or $anyfollows.Target -match 'Following') {
-                Write-Output "Skpping $($author.UserName) cuz y'all friends"
+                Write-Output "Skipping $related cuz y'all friends"
+                $anyfollows
                 continue
             }
 
