@@ -10,7 +10,7 @@ function Get-TwitterMention ($Id) {
         ExpansionType = 'Tweet'
         Endpoint      = "https://api.twitter.com/2/users/$Id/mentions"
         Query         = @{
-            'max_results' = 10
+            'max_results' = 50
         }
     }
     Invoke-TwitterRequest -RequestParameters $params
@@ -149,7 +149,7 @@ foreach ($mention in $mentions) {
         if ($mention.Text -match ($bannedwords -join "|") -and $mention.Text -notmatch ($allowedwords -join "|")) {
             #no API for muting conversation
             #Set-TwitterBlockedUser -User $author.UserName -Block
-            Write-Warning "BLOCKING $($author.UserName) FOR WORDS MATCHED"
+            Write-Warning "BLOCKING $($author.UserName) FOR TWEET WORDS MATCHED"
             continue
         }
         
@@ -163,6 +163,17 @@ foreach ($mention in $mentions) {
                 #Set-TwitterBlockedUser -User $author.UserName -Block
                 continue
             }
+        }
+
+        try {
+            $twprofile = Get-TwitterUser -UserName $author.UserName
+        } catch {}
+        
+        if ($twprofile.Description -match ($bannedwords -join "|")) {
+            #no API for muting conversation
+            #Set-TwitterBlockedUser -User $author.UserName -Block
+            Write-Warning "BLOCKING $($author.UserName) FOR PROFILE WORDS MATCHED"
+            continue
         }
     }
 }
