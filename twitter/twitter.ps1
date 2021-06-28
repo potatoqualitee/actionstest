@@ -180,6 +180,7 @@ foreach ($mention in $mentions) {
             Write-Output $twprofile.Description
             continue
         }
+
         # if anyone else on the thread is blocked
         foreach ($entity in $entities) {
             $related = $entity.Replace("@","")
@@ -191,6 +192,11 @@ foreach ($mention in $mentions) {
                 continue
             }
     
+            if ($anyfollows.Source -notmatch 'none' -or $anyfollows.Target -notmatch 'none') {
+                Write-Output "Skpping $($author.UserName) cuz y'all friends"
+                continue
+            }
+            
             if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
                 try {
                     $twuser = Get-TwitterUser -UserName $entity
