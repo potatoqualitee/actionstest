@@ -158,7 +158,6 @@ foreach ($mention in $mentions) {
     }
     if ($anyfollows.Source -match 'Following' -or $anyfollows.Target -match 'Following') {
         Write-Output "Skipping $($author.UserName) cuz y'all friends"
-        $anyfollows
         continue
     }
     if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
@@ -198,7 +197,6 @@ foreach ($mention in $mentions) {
             }
             if ($anyfollows.Source -match 'Following' -or $anyfollows.Target -match 'Following') {
                 Write-Output "Skipping $related cuz y'all friends"
-                $anyfollows
                 continue
             }
 
