@@ -1,5 +1,7 @@
 name: twitter
 on:
+  schedule:
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 defaults:
   run:
@@ -9,13 +11,15 @@ jobs:
   blockcheck:
     runs-on: ubuntu-latest
     env:
-      APIKEY: ${{secrets.TWITTERAPIKEY}}
-      APIKEYSECRET: ${{secrets.TWITTERAPIKEYSECRET}}
-      ACCESSTOKEN: ${{secrets.TWITTERACCESSTOKEN}}
-      ACCESSTOKENSECRET: ${{secrets.TWITTERACCESSTOKENSECRET}}
+      BLUEBIRDPS_API_KEY: ${{secrets.TWITTERAPIKEY}}
+      BLUEBIRDPS_API_SECRET: ${{secrets.TWITTERAPIKEYSECRET}}
+      BLUEBIRDPS_ACCESS_TOKEN: ${{secrets.TWITTERACCESSTOKEN}}
+      BLUEBIRDPS_ACCESS_TOKEN_SECRET: ${{secrets.TWITTERACCESSTOKENSECRET}}
 
     steps:
+      - uses: actions/checkout@v2
       - name: 💲 Create variables for module cacher
+        id: psmodulecache
         uses: potatoqualitee/psmodulecache@v3
         with:
           modules-to-cache: BlueBirdPS
