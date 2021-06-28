@@ -115,8 +115,9 @@ $bannedwords = @(
     'Honest',
     'Stefon Diggs'
     'hooper',
-    'heat'
-
+    'heat',
+    'd1e',
+    'm@g@'
 )
 # ONCE DONE, LOOK TO PROFILE FOR BANNED WORDS
 $allowedwords = @(
@@ -155,7 +156,7 @@ foreach ($mention in $mentions) {
         # Not following, not followed
         if ($mention.Text -match ($bannedwords -join "|") -and $mention.Text -notmatch ($allowedwords -join "|")) {
             #no API for muting conversation
-            #Set-TwitterBlockedUser -User $author.UserName -Block
+            Set-TwitterBlockedUser -User $author.UserName -Block
             Write-Warning "BLOCKING $($author.UserName) FOR TWEET WORDS MATCHED"
             Write-Warning $mention.Text
             continue
@@ -168,7 +169,7 @@ foreach ($mention in $mentions) {
             } catch {}
             if ($id -in $blocked.Id) {
                 Write-Warning "BLOCKING $(author.UserName) FOR RELATED BLOCKS ($id)"
-                #Set-TwitterBlockedUser -User $author.UserName -Block
+                Set-TwitterBlockedUser -User $author.UserName -Block
                 continue
             }
         }
@@ -179,7 +180,7 @@ foreach ($mention in $mentions) {
         
         if ($twprofile.Description -match ($bannedwords -join "|")) {
             #no API for muting conversation
-            #Set-TwitterBlockedUser -User $author.UserName -Block
+            Set-TwitterBlockedUser -User $author.UserName -Block
             Write-Warning "BLOCKING $($author.UserName) FOR PROFILE WORDS MATCHED"
             Write-Warning $twprofile.Description
             continue
