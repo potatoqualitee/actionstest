@@ -131,8 +131,8 @@ $allowedwords = @(
     'GitHub'
 )
 
-$Id = 2993481
-$mentions = Get-TwitterMention -Id $Id
+$myid = 2993481
+$mentions = Get-TwitterMention -Id $myid
 $entities = $mentions.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object -Unique
 $processed = @()
 foreach ($mention in $mentions) {
@@ -149,7 +149,8 @@ foreach ($mention in $mentions) {
     }
 
     $author = Get-TwitterUser -Id $mention.AuthorId
-    $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $author.UserName  
+    $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $author.UserName 
+    $blocked = Get-TwitterBlockedUserList -Id $myid
     
     if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
         Write-Output "No follow for $($author.UserName)"
@@ -175,7 +176,7 @@ foreach ($mention in $mentions) {
         }
         # if anyone else on the thread is blocked
         foreach ($entity in $entities) {
-            write-warning $entity.Replace("@","")
+            Write-Warning "$($entity.Replace('@',''))"
             try {
                 $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $entity.Replace("@","")
             } catch {}
@@ -185,8 +186,8 @@ foreach ($mention in $mentions) {
                     $twuser = Get-TwitterUser -UserName $entity
                 } catch {}
                 if ($twuser.id -in $blocked.Id) {
-                    Write-Warning "BLOCKING $($entity.Replace('@','')) FOR RELATED BLOCKS ($id)"
-                    $twuser | Set-TwitterBlockedUser -Block
+                    Write-Warning "BLOCKING $($author.UserName) FOR RELATED BLOCKS $($twuser.UserName)"
+                    #$author | Set-TwitterBlockedUser -Block
                     continue
                 }
             }
