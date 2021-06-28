@@ -156,7 +156,7 @@ foreach ($mention in $mentions) {
         # Not following, not followed
         if ($mention.Text -match ($bannedwords -join "|") -and $mention.Text -notmatch ($allowedwords -join "|")) {
             #no API for muting conversation
-            Set-TwitterBlockedUser -User $author.Id -Block
+            $author | Set-TwitterBlockedUser -Block
             Write-Warning "BLOCKING $($author.UserName) FOR TWEET WORDS MATCHED"
             Write-Warning $mention.Text
             continue
@@ -168,7 +168,7 @@ foreach ($mention in $mentions) {
         
         if ($twprofile.Description -match ($bannedwords -join "|")) {
             #no API for muting conversation
-            Set-TwitterBlockedUser -User $author.Id -Block
+            $author | Set-TwitterBlockedUser -Block
             Write-Warning "BLOCKING $($author.UserName) FOR PROFILE WORDS MATCHED"
             Write-Warning $twprofile.Description
             continue
@@ -182,11 +182,11 @@ foreach ($mention in $mentions) {
     
             if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
                 try {
-                    $id = (Get-TwitterUser -UserName $entity).Id
+                    $twuser = (Get-TwitterUser -UserName $entity).Id
                 } catch {}
-                if ($id -in $blocked.Id) {
+                if ($twuser.id -in $blocked.Id) {
                     Write-Warning "BLOCKING $($entity.Replace('@','')) FOR RELATED BLOCKS ($id)"
-                    Set-TwitterBlockedUser -User id -Block
+                    $twuser | Set-TwitterBlockedUser -Block
                     continue
                 }
             }
