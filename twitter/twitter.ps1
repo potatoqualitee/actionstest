@@ -162,18 +162,6 @@ foreach ($mention in $mentions) {
             continue
         }
         
-        # if anyone else on the thread is blocked
-        foreach ($entity in $entities) {
-            try {
-                $id = (Get-TwitterUser -UserName $entity).Id
-            } catch {}
-            if ($id -in $blocked.Id) {
-                Write-Warning "BLOCKING $(author.UserName) FOR RELATED BLOCKS ($id)"
-                Set-TwitterBlockedUser -User $author.UserName -Block
-                continue
-            }
-        }
-
         try {
             $twprofile = Get-TwitterUser -UserName $author.UserName
         } catch {}
@@ -184,6 +172,21 @@ foreach ($mention in $mentions) {
             Write-Warning "BLOCKING $($author.UserName) FOR PROFILE WORDS MATCHED"
             Write-Warning $twprofile.Description
             continue
+        }
+        # if anyone else on the thread is blocked
+        foreach ($entity in $entities) {
+            $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $entity.Replace("@","")
+    
+            if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
+                try {
+                    $id = (Get-TwitterUser -UserName $entity).Id
+                } catch {}
+                if ($id -in $blocked.Id) {
+                    Write-Warning "BLOCKING $(author.UserName) FOR RELATED BLOCKS ($id)"
+                    Set-TwitterBlockedUser -User $entity -Block
+                    continue
+                }
+            }
         }
     }
 }
