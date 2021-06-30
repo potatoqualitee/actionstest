@@ -1,7 +1,7 @@
 name: twitter
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 defaults:
   run:
@@ -35,6 +35,6 @@ jobs:
         if: steps.cacher.outputs.cache-hit != 'true'
         uses: potatoqualitee/psmodulecache@v3
 
-      - name: 🚀 Do it
+      - name: 🚀 Run block check
         run: |
           ./twitter/twitter.ps1
