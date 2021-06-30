@@ -218,18 +218,17 @@ foreach ($mention in $mentions) {
                 continue
             }
 
-            if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
+            if ($anyfollows.Source -match "Blocking") {
                 try {
                     $twuser = Get-TwitterUser -UserName $entity
                 } catch {
                     Write-Output "$entity no longer exists"
                     continue
                 }
-                if ($twuser.id -in $blocked.Id) {
-                    Write-Output "BLOCKING $($author.UserName) FOR RELATED BLOCKS $($twuser.UserName)"
-                    $author | Set-TwitterBlockedUser -Block
-                    continue
-                }
+                
+                Write-Output "BLOCKING $($author.UserName) FOR RELATED BLOCKS $($twuser.UserName)"
+                $author | Set-TwitterBlockedUser -Block
+                continue
             }
         }
     }
