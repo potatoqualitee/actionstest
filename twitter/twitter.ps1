@@ -201,7 +201,7 @@ foreach ($mention in $mentions) {
 
             if ($related -in $processed) {
                 Write-Output "$related has already been processed"
-                #continue
+                continue
             } else {
                 $processed += $related
             }
@@ -227,7 +227,7 @@ foreach ($mention in $mentions) {
                 }
                 
                 Write-Output "BLOCKING $($author.UserName) FOR RELATED BLOCKS $($twuser.UserName)"
-                #$author | Set-TwitterBlockedUser -Block
+                $author | Set-TwitterBlockedUser -Block
                 continue
             }
         }
