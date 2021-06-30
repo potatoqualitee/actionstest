@@ -1,10 +1,3 @@
-$params = @{
-    ApiKey            = $env:TAPIKEY
-    ApiSecret         = $env:TAPIKEYSECRET
-    AccessToken       = $env:TACCESSTOKEN
-    AccessTokenSecret = $env:TACCESSTOKENSECRET
-}
-#Set-TwitterAuthentication @params
 function Get-TwitterMention ($Id) {
     $params = @{
         ExpansionType = 'Tweet'
@@ -121,9 +114,12 @@ $bannedwords = @(
     'Westbrook',
     'Luka',
     '76',
-    'Pistons'
+    'Pistons',
+    'oil prices',
+    'price of oil',
+    '\(\+',
+    '\(\-'
 )
-# ONCE DONE, LOOK TO PROFILE FOR BANNED WORDS
 $allowedwords = @(
     'dbatools',
     '-Dba',
@@ -156,8 +152,7 @@ foreach ($mention in $mentions) {
 
     $author = Get-TwitterUser -Id $mention.AuthorId
     $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $author.UserName 
-    $blocked = Get-TwitterBlockedUserList -Id $myid
-
+ 
     if ($anyfollows.Source -match "Blocking") {
         Write-Output "Skipping tweet from $($author.UserName) because they are already blocked"
         continue
@@ -206,7 +201,6 @@ foreach ($mention in $mentions) {
                 $processed += $related
             }
 
-            #Write-Output "Checking $related for friendship"
             try {
                 $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $related
             } catch {
