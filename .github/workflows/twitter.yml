@@ -1,7 +1,7 @@
 name: twitter
 on:
   schedule:
-    - cron: "* * * * *"
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 defaults:
   run:
