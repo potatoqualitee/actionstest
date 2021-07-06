@@ -3,7 +3,7 @@ function Get-TwitterMention ($Id) {
         ExpansionType = 'Tweet'
         Endpoint      = "https://api.twitter.com/2/users/$Id/mentions"
         Query         = @{
-            'max_results' = 10
+            'max_results' = 5
         }
     }
     Invoke-TwitterRequest -RequestParameters $params
