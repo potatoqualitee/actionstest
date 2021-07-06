@@ -3,7 +3,7 @@ function Get-TwitterMention ($Id) {
         ExpansionType = 'Tweet'
         Endpoint      = "https://api.twitter.com/2/users/$Id/mentions"
         Query         = @{
-            'max_results' = 5
+            'max_results' = 20
         }
     }
     Invoke-TwitterRequest -RequestParameters $params
@@ -137,7 +137,7 @@ $mentions = Get-TwitterMention -Id $myid
 $blocktestprocessed = @()
 $friendtestprocessed = @()
 foreach ($mention in $mentions) {
-    $entities = $mention.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object 
+    $entities = $mention.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object
     $mentionusername = (Get-TwitterUser -Id $mention.AuthorId).UserName
     if ($mentionusername -in $blocktestprocessed) {
         Write-Output "$mentionusername has already been processed"
@@ -152,8 +152,8 @@ foreach ($mention in $mentions) {
     }
 
     $author = Get-TwitterUser -Id $mention.AuthorId
-    $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $author.UserName 
- 
+    $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $author.UserName
+
     if ($anyfollows.Source -match "Blocking") {
         Write-Output "Skipping tweet from $($author.UserName) because they are already blocked"
         continue
@@ -162,7 +162,7 @@ foreach ($mention in $mentions) {
         Write-Output "Skipping $($author.UserName) cuz y'all friends"
         continue
     }
-    
+
     # TEST IF FRIENDS ARE ON THE THREAD
     $friendsonthread = $false
     foreach ($entity in $entities) {
@@ -203,13 +203,13 @@ foreach ($mention in $mentions) {
             Write-Output $mention.Text
             continue
         }
-        
+
         try {
             $twprofile = Get-TwitterUser -UserName $author.UserName
         } catch {
             Write-Output "$($author.UserName) no longer exists"
         }
-        
+
         if ($twprofile.Description -match ($bannedwords -join "|")) {
             #no API for muting conversation
             $author | Set-TwitterBlockedUser -Block
@@ -251,7 +251,7 @@ foreach ($mention in $mentions) {
                     Write-Output "$entity no longer exists"
                     continue
                 }
-                
+
                 Write-Output "BLOCKING $($author.UserName) FOR RELATED BLOCKS $($twuser.UserName)"
                 $author | Set-TwitterBlockedUser -Block
                 continue
