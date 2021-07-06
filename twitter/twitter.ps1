@@ -134,15 +134,16 @@ $allowedwords = @(
 
 $myid = 2993481
 $mentions = Get-TwitterMention -Id $myid
-$processed = @()
+$blocktestprocessed = @()
+$friendtestprocessed = @()
 foreach ($mention in $mentions) {
     $entities = $mention.Entities.UserName | Where-Object { $PSItem -ne 'cl' } | Sort-Object 
     $mentionusername = (Get-TwitterUser -Id $mention.AuthorId).UserName
-    if ($mentionusername -in $processed) {
+    if ($mentionusername -in $blocktestprocessed) {
         Write-Output "$mentionusername has already been processed"
         continue
     } else {
-        $processed += $mentionusername
+        $blocktestprocessed += $mentionusername
     }
     # Check if it's a directed tweet
     if ($mention.Entities.Count -eq 1 -and -not $mention.ReferencedTweets) {
@@ -161,6 +162,37 @@ foreach ($mention in $mentions) {
         Write-Output "Skipping $($author.UserName) cuz y'all friends"
         continue
     }
+    
+    # TEST IF FRIENDS ARE ON THE THREAD
+    $friendsonthread = $false
+    foreach ($entity in $entities) {
+        $related = $entity.Replace("@","")
+        if ($related -eq $author.Username) {
+            Write-Output "Not a real entity"
+            continue
+        }
+
+        if ($related -in $friendtestprocessed) {
+            Write-Output "$related has already been processed"
+            continue
+        } else {
+            $friendtestprocessed += $related
+        }
+
+        try {
+            $anyfollows = Get-TwitterFriendship -SourceUserName cl -TargetUserName $related
+        } catch {
+            Write-Output "$related no longer exists"
+        }
+        if ($anyfollows.Source -match 'Following') {
+            Write-Output "Your friends are on this thread, so we'll move on"
+            $friendsonthread = $true
+            continue
+        }
+    }
+
+    if ($friendsonthread) { continue }
+
     if ($anyfollows.Source -match 'none' -and $anyfollows.Target -match 'none') {
         Write-Output "No follow for $($author.UserName), processing"
         # Not following, not followed
@@ -194,11 +226,11 @@ foreach ($mention in $mentions) {
                 continue
             }
 
-            if ($related -in $processed) {
+            if ($related -in $blocktestprocessed) {
                 Write-Output "$related has already been processed"
                 continue
             } else {
-                $processed += $related
+                $blocktestprocessed += $related
             }
 
             try {
