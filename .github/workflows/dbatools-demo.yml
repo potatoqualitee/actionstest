@@ -1,0 +1,26 @@
+name: Test dbatools against SQL Server container
+on: [push, pull_request]
+defaults:
+  run:
+    shell: pwsh
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # download and start the container (sqlps.io/container)
+      - name: Download and start the container
+        run: docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=dbatools.I0" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+
+      - name: Install dbatools
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module dbatools
+
+      - name: Test against the SQL Server container
+        run: |
+          $securestring = ConvertTo-SecureString dbatools.I0 -AsPlainText -Force
+          $cred = New-Object System.Management.Automation.PSCredential -ArgumentList sa, $securestring
+          # Run a query
+          Invoke-DbaQuery -SqlInstance localhost -SqlCredential $cred -Query 'SELECT 1'
