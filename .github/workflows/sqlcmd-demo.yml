@@ -4,8 +4,6 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
       # download and start the container (sqlps.io/container)
       - name: Download and start the container
         run: docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=dbatools.I0" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
@@ -21,5 +19,4 @@ jobs:
           source ~/.bashrc
 
       - name: Run sqlcmd
-        run: |
-          sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "SELECT @@version;"
+        run: sqlcmd -S localhost -U sa -P dbatools.I0 -d tempdb -Q "SELECT @@version;"
