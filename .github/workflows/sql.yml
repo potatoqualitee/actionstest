@@ -12,9 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name:  Setup docker images
-        run: |
-          docker run -e "ACCEPT_EULA=Y" -e "dbatools.IO" -p 1433:1433 --name localhost -h localhost -d mcr.microsoft.com/mssql/server:2019-latest
+      - name: Run the action
+        uses: potatoqualitee/mssqlsuite@v1
+        with:
+          install: sqlengine, sqlpackage
 
       - name: Install dbatools
         run: |
