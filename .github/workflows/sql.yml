@@ -17,8 +17,15 @@ jobs:
           docker pull mcr.microsoft.com/mssql/server:2019-latest
           docker run -e "ACCEPT_EULA=Y" -e "dbatools.IO" -p 1433:1433 --name sql1 -h sql1 -d mcr.microsoft.com/mssql/server:2019-latest
 
-    
       - name: Install dbatools
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module dbatools
+    
+      - name: Encode password from plain text
+        run: |
+          $password = ConvertTo-SecureString -String dbatools.IO -AsPlainText -Force
+          $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "sa", $password
+
+      - name: Connect to SQL Server using Invoke-DbaQuery
+        run: Invoke-DbaQuery -SqlInstance localhost -SqlCredential $cred -Query "SELECT @@VERSION"
