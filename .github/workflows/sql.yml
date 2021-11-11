@@ -1,0 +1,18 @@
+name: test a query
+on: [push]
+defaults:
+  run:
+    shell: pwsh
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name:  Setup docker images
+        run: |
+          docker pull mcr.microsoft.com/mssql/server:2019-latest
+          docker run -e "ACCEPT_EULA=Y" -e "dbatools.IO" -p 1433:1433 --name sql1 -h sql1 -d mcr.microsoft.com/mssql/server:2019-latest
