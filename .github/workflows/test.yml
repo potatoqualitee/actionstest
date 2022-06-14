@@ -5,7 +5,7 @@ jobs:
   run-on-linux:
     runs-on: ubuntu-latest
     steps:
-      - name: What's installed
+      - name: What's installed now
         shell: pwsh
         run: |
           Get-ChildItem -Recurse -Path ~/.cache | Select-Object FullName
