@@ -14,7 +14,7 @@ jobs:
           path: |
             ~/.local/share/powershell/Modules
             ~/.cache/powershell/
-          key: ${{ runner.os }}-${{ hashFiles('**/.cache/powershell/ModuleAnalysisCache*') }}
+          key: ${{ runner.os }}-1-${{ hashFiles('**/.cache/powershell/ModuleAnalysisCache*') }}
       - name: Install PowerShell modules
         if: steps.powershell-cache.outputs.cache-hit != 'true'
         shell: pwsh
