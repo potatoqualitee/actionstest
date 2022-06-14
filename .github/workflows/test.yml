@@ -8,12 +8,12 @@ jobs:
       - name: What's installed now
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse -Path ~/.cache | Select-Object FullName
+          Get-ChildItem -Recurse -Path ~/.local/share/powershell/Modules | Select-Object FullName
       - uses: actions/cache@v2
         with:
           path: |
             ~/.local/share/powershell/Modules
-          key: ${{ runner.os }}-1-${{ hashFiles('**/.local/share/powershell/Modules/*') }}
+          key: ${{ runner.os }}-1-${{ hashFiles('**/.local/share/powershell/Modules*') }}
       - name: Install PowerShell modules
         if: steps.powershell-cache.outputs.cache-hit != 'true'
         shell: pwsh
