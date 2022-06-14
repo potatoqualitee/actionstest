@@ -1,0 +1,27 @@
+name: example test
+on:
+  push:
+jobs:
+  run-on-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: What's installed
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse -Path ~/.cache/powershell | Select-Object FullName
+      - uses: actions/cache@v2
+        with:
+          path: ~/.local/share/powershell/Modules
+          key: ${{ runner.os }}-${{ hashFiles('**/.cache/powershell/ModuleAnalysisCache*') }}
+      - name: Install PowerShell modules
+        if: steps.powershell-cache.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module dbatools -ErrorAction Stop
+      - name: Test installed PowerShell modules
+        shell: pwsh
+        run: |
+          Get-Module -Name dbatools -ListAvailable | Select Path
+          Import-Module dbatools -ErrorAction Stop
+          Get-Command -Module dbatools | Select -ExpandProperty Name -First 10
