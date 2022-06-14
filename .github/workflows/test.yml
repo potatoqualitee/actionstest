@@ -13,7 +13,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: ~/.local/share/powershell/Modules
-          key: ${{ runner.os }}-1-${{ hashFiles('/home/runner/.local/share/powershell/Modules/*', '/opt/microsoft/powershell/7/Modules/**', '/opt/microsoft/powershell/7/Modules/PSReadLine/PSReadLine.psd1') }}
+          key: ${{ runner.os }}-1-${{ hashFiles('/opt/microsoft/powershell/7/Modules/ThreadJob/ThreadJob.psd1') }}
       - name: Install PowerShell modules
         if: steps.powershell-cache.outputs.cache-hit != 'true'
         shell: pwsh
