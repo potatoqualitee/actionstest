@@ -11,7 +11,9 @@ jobs:
           Get-ChildItem -Recurse -Path ~/.cache | Select-Object FullName
       - uses: actions/cache@v2
         with:
-          path: ~/.local/share/powershell/Modules
+          path: |
+            ~/.local/share/powershell/Modules
+            ~/.cache/powershell/
           key: ${{ runner.os }}-${{ hashFiles('**/.cache/powershell/ModuleAnalysisCache*') }}
       - name: Install PowerShell modules
         if: steps.powershell-cache.outputs.cache-hit != 'true'
