@@ -8,7 +8,7 @@ jobs:
       - name: What's installed
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse -Path ~/.cache/powershell | Select-Object FullName
+          Get-ChildItem -Recurse -Path ~/.cache | Select-Object FullName
       - uses: actions/cache@v2
         with:
           path: ~/.local/share/powershell/Modules
