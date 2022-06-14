@@ -9,11 +9,12 @@ jobs:
         shell: pwsh
         run: |
           Get-ChildItem -Recurse -Path ~/.local/share/powershell/ | Select-Object FullName
+          Get-ChildItem -Recurse -Path /opt/microsoft/powershell/7/Modules/ | Select-Object FullName
       - uses: actions/cache@v2
         with:
           path: |
             ~/.local/share/powershell/Modules
-          key: ${{ runner.os }}-1-${{ hashFiles('**/.local/share/powershell**', '/opt/microsoft/powershell/7/Modules/**') }}
+          key: ${{ runner.os }}-1-${{ hashFiles('/**/.local/share/powershell**', '/opt/microsoft/powershell/7/Modules/**') }}
       - name: Install PowerShell modules
         if: steps.powershell-cache.outputs.cache-hit != 'true'
         shell: pwsh
