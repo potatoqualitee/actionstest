@@ -25,3 +25,7 @@ jobs:
           Get-Module -Name dbatools -ListAvailable | Select Path
           Import-Module dbatools -ErrorAction Stop
           Get-Command -Module dbatools | Select -ExpandProperty Name -First 10
+      - name: What's installed again
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse -Path ~/.cache | Select-Object FullName
