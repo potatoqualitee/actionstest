@@ -1,0 +1,21 @@
+name: Actions Workflow
+on: [push]
+jobs:
+  run-sql:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🐋 Startup Container
+        shell: bash
+        run: |
+          # In this scenario with a fresh container used for testing,
+          # it is acceptable to use a plain-text password
+          docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Admin123" \
+          -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+
+      - name: 🛢️ Query the server to see the server version
+        shell: bash
+        run: |
+          # Give the container a moment to startup
+          sleep 5
+          # Execute SQL a query
+          sqlcmd -S localhost -U sa -P Admin123 -q "SELECT @@VERSION"
