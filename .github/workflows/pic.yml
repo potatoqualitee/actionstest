@@ -22,9 +22,6 @@ jobs:
       - name: Install dependencies and run tests
         run: |
           sudo apt-get --assume-yes install libatk1.0-0 libatk-bridge2.0-0 libcups2 libxkbcommon0 libxdamage1 libgbm1 libpango-1.0-0 libcairo2 libatspi2.0-0
-          npx --yes playwright install
-          npx --yes playwright install-deps
-          #npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark ./hello.html /mnt/c/temp/hello.png
-
+          npx --yes playwright install --with-deps chromium
           echo "<h1>hello</h1>" > /tmp/echo.html
-          # npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark /tmp/echo.html /tmp/echo.png
+          npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark /tmp/echo.html /tmp/echo.png
