@@ -1,0 +1,18 @@
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  make-pic:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - uses: microsoft/playwright-github-action@v1
+
+      - name: Install dependencies and run tests
+        run: |
+          echo "<h1>hello</h1>" > /tmp/echo.html
+          npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark /tmp/echo.html /tmp/echo.png
