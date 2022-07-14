@@ -17,12 +17,6 @@ jobs:
         run: |
           npx --yes playwright install --with-deps chromium
 
-      - name: Convert files
-        shell: pwsh
-        run: |
-          echo "<h1>hello</h1>" > /tmp/echo.html
-          npx playwright screenshot --viewport-size=1200,630 /tmp/echo.html /tmp/echo.png
-
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
