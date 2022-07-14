@@ -22,10 +22,9 @@ jobs:
       - name: Install dependencies and run tests
         run: |
           sudo apt-get --assume-yes install libatk1.0-0 libatk-bridge2.0-0 libcups2 libxkbcommon0 libxdamage1 libgbm1 libpango-1.0-0 libcairo2 libatspi2.0-0
-          sudo apt --fix-broken install
-          sudo npx -y playwright install
-          sudo npx -y playwright install-deps
-          npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark ./hello.html /mnt/c/temp/hello.png
+          sudo npx --yes playwright install
+          sudo npx --yes playwright install-deps
+          #npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark ./hello.html /mnt/c/temp/hello.png
 
           echo "<h1>hello</h1>" > /tmp/echo.html
           # npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark /tmp/echo.html /tmp/echo.png
