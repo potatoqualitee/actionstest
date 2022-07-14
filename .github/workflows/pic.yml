@@ -6,6 +6,8 @@ on:
 jobs:
   make-pic:
     runs-on: ubuntu-latest
+    env:
+      npm_config_yes: true
 
     steps:
       - uses: actions/checkout@v2
@@ -25,4 +27,4 @@ jobs:
           npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark ./hello.html /mnt/c/temp/hello.png
 
           echo "<h1>hello</h1>" > /tmp/echo.html
-          npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark /tmp/echo.html /tmp/echo.png
+          # npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark /tmp/echo.html /tmp/echo.png
