@@ -10,9 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
-      - uses: microsoft/playwright-github-action@v1
 
       - name: Install dependencies and run tests
         run: |
+          sudo nvm install --lts
+          sudo nvm install node
+          sudo npx playwright install
+          sudo npx playwright install-deps
+          sudo apt --fix-broken install
+          sudo apt-get --assume-yes install libatk1.0-0 libatk-bridge2.0-0 libcups2 libxkbcommon0 libxdamage1 libgbm1 libpango-1.0-0 libcairo2 libatspi2.0-0
+          npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark ./hello.html /mnt/c/temp/hello.png
+
           echo "<h1>hello</h1>" > /tmp/echo.html
           npx playwright screenshot --viewport-size=1200,630 --color-scheme=dark /tmp/echo.html /tmp/echo.png
