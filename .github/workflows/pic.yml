@@ -20,11 +20,19 @@ jobs:
       - name: Convert files
         shell: pwsh
         run: |
-          echo "<h1>hello</h1>" > /tmp/echo.html
-          npx playwright screenshot --viewport-size=1200,630 /tmp/echo.html /tmp/echo.png
+          New-Item -Path /tmp/thumbs -Force -ItemType Directory
+          Invoke-WebRequest -Uri https://raw.githubusercontent.com/dataplat/dbatools/master/bin/dbatools-index.json -OutFile /tmp/thumbs/index.json
+          $commands = Get-Content -Path /tmp/thumbs/index.json | ConvertFrom-Json
+          $commands | Select-Object -First 1
+
+          foreach ($command in $commands) {
+            $name = $command.CommandName
+            echo "<h1>$name</h1>" > /tmp/thumbs/$name.html
+            npx playwright screenshot --viewport-size=1200,630 /tmp/thumbs/$name.html /tmp/thumbs/$name.png
+          }
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: pics
-          path: /tmp/echo.png
+          path: /tmp/thumbs
