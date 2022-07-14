@@ -6,8 +6,6 @@ on:
 jobs:
   make-pic:
     runs-on: ubuntu-latest
-    env:
-      npm_config_yes: true
 
     steps:
       - uses: actions/checkout@v3
