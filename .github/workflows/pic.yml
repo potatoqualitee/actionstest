@@ -8,14 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       npm_config_yes: true
-      PLAYWRIGHT_BROWSERS_PATH: 0
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-
-      - name: Install nvm
-        uses: dcodeIO/setup-node-nvm@master
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: lts/*
 
