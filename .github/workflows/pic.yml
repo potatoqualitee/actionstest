@@ -11,9 +11,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
 
+      - name: Install nvm
+        uses: dcodeIO/setup-node-nvm@master
+        with:
+          node-version: lts/*
+
       - name: Install dependencies and run tests
         run: |
-          nvm install node
           sudo npx playwright install
           sudo npx playwright install-deps
           sudo apt --fix-broken install
