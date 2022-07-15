@@ -1046,3 +1046,57 @@ code>span.in {
     background-color: rgba(180, 237, 95, 0.5);
   }
 }
+
+.header {
+  display: table-cell;
+  width: 125px;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 40px;
+  text-align: center;
+}
+
+.url {
+  font-size: 10px;
+  color: gray;
+}
+
+.sup {
+  font-size: 40px;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Dubai Medium", "Cascadia Mono SemiBold";
+}
+
+.outer {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 85%;
+  height: auto;
+}
+
+.navbar {
+  background-color: #333;
+  bottom: 0;
+  width: 100%;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
