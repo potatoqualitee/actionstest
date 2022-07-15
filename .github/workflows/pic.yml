@@ -31,12 +31,11 @@ jobs:
           foreach ($command in $commands) {
             $name = $command.CommandName
             $example = $command.Examples.Split("`n") | Select-Object -First 1 -Skip 1
-            if ($command.Availability -match "Linux") {
-              $example = $example.Replace("PS C:\>", "PS /tmp> ")
-            } else {
-              $example = $example.Replace("PS C:\>", "PS C:\> ")
+            $example = $example.Replace("PS C:\>", "")
+            $example = $example.Replace("PS>", "")
+            if ($example.Length -gt 120) {
+              $example = $example.Substring(0, 120) + "..."
             }
-            
             $content = $template.Replace("--COMMAND--", $name)
             $content = $content.Replace("--WORKSON--", $command.Availability)
             $content = $content.Replace("--SYNOPSIS--", $command.Synopsis)
