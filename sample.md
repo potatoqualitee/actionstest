@@ -19,12 +19,12 @@
 
 <h2>Synopsis</h2>
 <div>
----SYNOPSIS---
+--SYNOPSIS--
 </div>
 
 <h2>Example</h2>
 ```
----EXAMPLE---
+--EXAMPLE--
 ```
 <br/><div class="url">dbatools.io</div>
 </div>
