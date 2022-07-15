@@ -25,7 +25,6 @@ jobs:
           New-Item -Path /tmp/thumbs -Force -ItemType Directory
           Invoke-WebRequest -Uri https://raw.githubusercontent.com/dataplat/dbatools/master/bin/dbatools-index.json -OutFile /tmp/thumbs/index.json
           $commands = Get-Content -Path /tmp/thumbs/index.json | ConvertFrom-Json
-          $commands = $commands | Select-Object -First 10
           $template = Get-Content -Path ./template.md
 
           foreach ($command in $commands) {
