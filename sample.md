@@ -53,14 +53,12 @@ h1 {
 <font class="sup">Add-DbaAgDatabase</font>
 
 
-<div style="display: table;">
+<div style="display: table;color: gray;font-size: 18px;">
 <div style="display: table-row;">
-<div class="header">Author</div>
-<div style="display: table-cell;">Author Chrissy LeMaire (@cl), netnerds.net , Andreas Jordan (@JordanOrdix), ordix.de</div>
+<div style="display: table-cell;">Developed by Chrissy LeMaire (@cl), netnerds.net , Andreas Jordan (@JordanOrdix), ordix.de</div>
 </div>
 <div style="display: table-row;">
-<div class="header">Availability</div>
-<div style="display: table-cell;">Windows, Linux, macOS</div>
+<div style="display: table-cell;">Works on Windows, Linux, macOS</div>
 </div>
 </div>
 
