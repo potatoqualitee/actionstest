@@ -23,9 +23,8 @@
 </div>
 
 <h2>Example</h2>
-```
---EXAMPLE--
-```
+<pre><code style="white-space: initial;">--EXAMPLE--</code></pre>
+
 <br/><div class="url">dbatools.io</div>
 </div>
 </div>
