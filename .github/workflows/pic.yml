@@ -9,13 +9,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: nikeee/setup-pandoc@v1
       - uses: actions/setup-node@v3
         with:
           node-version: lts/*
 
-      - name: Install playwright
+      - name: Install playwright and optipng
         run: |
           npx --yes playwright install --with-deps chromium
+          sudo apt-get install -y optipng
 
       - name: Convert files
         shell: pwsh
@@ -23,13 +25,19 @@ jobs:
           New-Item -Path /tmp/thumbs -Force -ItemType Directory
           Invoke-WebRequest -Uri https://raw.githubusercontent.com/dataplat/dbatools/master/bin/dbatools-index.json -OutFile /tmp/thumbs/index.json
           $commands = Get-Content -Path /tmp/thumbs/index.json | ConvertFrom-Json
-          $commands | Select-Object -First 1
 
+          pandoc -f markdown -t html sample.md -o /tmp/file.html --self-contained --css=gh-pandoc.css
+          npx playwright screenshot --viewport-size=1200,630 /tmp/file.html /tmp/file.png
+          optipng -o7 /tmp/file.png
+
+          <#
           foreach ($command in $commands) {
             $name = $command.CommandName
             echo "<h1>$name</h1>" > /tmp/thumbs/$name.html
+            pandoc -f markdown -t html sample.md -o file.html --self-contained --css=gh-pandoc.css
             npx playwright screenshot --viewport-size=1200,630 /tmp/thumbs/$name.html /tmp/thumbs/$name.png
           }
+          #>
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
