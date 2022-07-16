@@ -459,7 +459,7 @@ th {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 14pt;
+  font-size: 18pt;
   line-height: 1.6;
   margin: auto;
   max-width: 1100px;
@@ -761,9 +761,10 @@ tt {
   padding-bottom: 0.2em;
   margin: 0;
   font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-  font-size: 10pt;
+  font-size: 16pt;
   background-color: rgba(0, 0, 0, 0.04);
   border-radius: 3px;
+  white-space: pre-line !important;
 }
 
 pre>code {
@@ -1054,7 +1055,7 @@ code>span.in {
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 60px;
   text-align: center;
 }
 
@@ -1064,7 +1065,7 @@ h1 {
 }
 
 .sup {
-  font-size: 40px;
+  font-size: 60px;
   text-align: center;
   font-weight: bold;
 }
@@ -1074,7 +1075,7 @@ h1 {
   position: absolute;
   top: 0;
   left: 0;
-  height: 95%;
+  height: 100%;
   width: 100%;
 }
 
@@ -1086,8 +1087,8 @@ h1 {
 .inner {
   margin-left: auto;
   margin-right: auto;
-  width: 85%;
-  height: auto;
+  width: 95%;
+  height: 100%;
 }
 
 .navbar {
@@ -1098,4 +1099,7 @@ h1 {
   position: absolute;
   left: 0;
   width: 100%;
+  color: gray;
+  text-align: center;
+  font-size: 12px;
 }

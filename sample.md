@@ -5,29 +5,28 @@
 <img align="right" src=./dataplat.png alt="dbatools logo">
 </div>
 
-<font class="sup">--COMMAND--</font>
+<font class="sup">Start-DbaMigration</font>
 
 
-<div style="display: table;color: gray;font-size: 18px;">
+<div style="display: table;color: gray;font-size: 24px;">
 <div style="display: table-row;">
-<div style="display: table-cell;">Developed by --AUTHOR--</div>
+<div style="display: table-cell;">Developed by Chrissy LeMaire (@cl) | Andreas Jordan (@jordaninix), ordanix.de</div>
 </div>
 <div style="display: table-row;">
-<div style="display: table-cell;">Works on --WORKSON--</div>
+<div style="display: table-cell;">Works on Windows, Linux, macOS</div>
 </div>
 </div>
 
 <h2>Synopsis</h2>
 <div>
---SYNOPSIS--
+Migrates SQL Server *ALL* databases, logins, database mail profiles/accounts, credentials, SQL Agent objects, linked servers, Central Management Server objects, server configuration settings (sp_configure), user objects in systems databases, system triggers and backup devices from one SQL Server to another.
 </div>
 
 <h2>Example</h2>
 ```
---EXAMPLE--
+Start-DbaMigration -Source sqlserver\instance -Destination sqlcluster -DetachAttach Start-DbaMigration -Source sqlserver\instance -Destination sqlcluster -DetachAttach
 ```
-<br/><div class="url">dbatools.io</div>
 </div>
 </div>
 </div>
-<div class="navbar">&nbsp;</div>
+<div class="navbar">dbatools.io</div>
