@@ -5,7 +5,7 @@
 <img align="right" src=./dataplat.png alt="dbatools logo">
 </div>
 
-<font class="sup">Start-DbaMigration</font>
+<font class="sup" style="font-size: --SIZE--;">Start-DbaMigration</font>
 
 
 <div style="display: table;color: gray;font-size: 24px;">

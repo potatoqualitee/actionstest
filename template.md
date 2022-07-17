@@ -5,10 +5,10 @@
 <img align="right" src=./dataplat.png alt="dbatools logo">
 </div>
 
-<font class="sup">--COMMAND--</font>
+<font class="sup" style="font-size: --SIZE--;">--COMMAND--</font>
 
 
-<div style="display: table;color: gray;font-size: 18px;">
+<div style="display: table;color: gray;font-size: 24px;">
 <div style="display: table-row;">
 <div style="display: table-cell;">Developed by --AUTHOR--</div>
 </div>
@@ -23,10 +23,11 @@
 </div>
 
 <h2>Example</h2>
-<pre><code style="white-space: initial;">--EXAMPLE--</code></pre>
+```
+--EXAMPLE--
+```
 
-<br/><div class="url">dbatools.io</div>
 </div>
 </div>
 </div>
-<div class="navbar">&nbsp;</div>
+<div class="navbar">dbatools.io</div>
