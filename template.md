@@ -2,7 +2,7 @@
 <div class="middle">
 <div class="inner">
 <div style="float:right;margin-right: 50px;">
-<img align="right" src=./dataplat.png alt="dbatools logo">
+<img align="right" src=https://raw.githubusercontent.com/dataplat/dbatools/development/bin/dbatools.png>
 </div>
 
 <font class="sup" style="font-size: --SIZE--;">--COMMAND--</font>
