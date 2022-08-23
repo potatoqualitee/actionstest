@@ -1,5 +1,5 @@
 BeforeAll {
-      Import-Module ../YoutubeDownloader/YoutubeDownloader.psd1
+      Import-Module ./YoutubeDownloader/YoutubeDownloader.psd1
 }
 
 Describe 'Save-YoutubeVideo' {
